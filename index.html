@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soroth — Signature Fashion Store</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="container nav nav-home">
+      <a class="logo" href="index.html">Soroth</a>
+      <nav class="nav-links">
+        <a href="index.html" class="active">Home</a>
+        <a href="collections_page.html">Collections</a>
+        <a href="summer_collection.html">Summer</a>
+        <a href="winter_collection.html">Winter</a>
+        <a href="evening_elegance.html">Evening</a>
+        <a href="discount_corner.html">Offers</a>
+        <a href="about_us_page.html">About</a>
+      </nav>
+      <div class="nav-actions home-actions">
+        <div class="search-shell">
+          <input id="homeSearch" class="search-input" type="text" placeholder="Search dresses, polos, hoodies...">
+          <div id="homeSearchResults" class="search-results-panel"></div>
+        </div>
+        <a class="icon-link" href="profile_page.html">Profile</a>
+        <a class="badge-pill" href="cart_page.html">Cart <strong data-cart-count>0</strong></a>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero refined-hero">
+    <div class="container hero-split">
+      <div class="hero-copy">
+        <span class="chip">New arrivals · Curated by Soroth</span>
+        <h1>Elevate your wardrobe with <span class="gradient-text">statement fashion</span> and everyday essentials.</h1>
+        <p>Discover polished occasion wear, comfortable daily pieces, and standout seasonal looks crafted for modern style with a rich, premium feel.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="collections_page.html">Shop Now</a>
+          <a class="btn btn-secondary" href="discount_corner.html">Explore Offers</a>
+        </div>
+        <div class="mini-metrics">
+          <div><strong>19+</strong><span>Curated products</span></div>
+          <div><strong>4</strong><span>Signature collections</span></div>
+          <div><strong>Live</strong><span>Stock updates</span></div>
+        </div>
+      </div>
+      <div class="hero-showcase">
+        <div class="showcase-main"><img src="Image/soroth_green_gown.jpg" alt="Soroth featured gown"></div>
+        <div class="showcase-stack">
+          <div class="stack-card"><img src="Image/soroth_mens_polo.jpg" alt="Soroth polo"></div>
+          <div class="stack-card"><img src="Image/soroth_striped_dress.jpg" alt="Soroth striped dress"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="feature-ribbon">
+        <div class="feature-pill"><strong>Women</strong><span>Elegant festive & casual edits</span></div>
+        <div class="feature-pill"><strong>Men</strong><span>Sharp polos, shirts & refined basics</span></div>
+        <div class="feature-pill"><strong>Seasonal</strong><span>Fresh summer and winter must-haves</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <h2>Featured collections</h2>
+          <p>Explore fashion stories inspired by the pieces you shared.</p>
+        </div>
+      </div>
+      <div class="grid categories" id="categoryGrid"></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container home-story-grid">
+      <div class="banner story-card">
+        <div>
+          <span class="chip">Soroth Signature</span>
+          <h2>Made to look vibrant, premium, and memorable.</h2>
+          <p>From elegant gowns to clean-cut basics, Soroth blends expressive color with practical shopping flow.</p>
+        </div>
+      </div>
+      <div class="story-side-grid">
+        <div class="story-side-card"><img src="Image/soroth_black_tshirt.jpg" alt="Soroth black tee"><div><h3>Minimal Essentials</h3><p>Simple daily styles with clean branding.</p></div></div>
+        <div class="story-side-card"><img src="Image/soroth_hoodie.avif" alt="Soroth hoodie"><div><h3>Seasonal Comfort</h3><p>Layer-ready winter pieces with modern appeal.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <h2>Featured products</h2>
+          <p>Top picks across women, men, daily wear, and occasion style.</p>
+        </div>
+        <a href="collections_page.html" class="btn btn-soft">See all</a>
+      </div>
+      <div class="grid products" id="featuredProducts"></div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>
+        <div class="logo" style="color:white;background:none;-webkit-text-fill-color:white">Soroth</div>
+        <p class="small">Premium fashion with elegant edits, modern basics, and seasonal collections.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <p><a href="collections_page.html">Collections</a></p>
+        <p><a href="summer_collection.html">Summer</a></p>
+        <p><a href="winter_collection.html">Winter</a></p>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <p class="small">Email: hello@soroth.com</p>
+        <p class="small">Instagram: @soroth.style</p>
+        <p class="small">Dhaka, Bangladesh</p>
+      </div>
+    </div>
+  </footer>
+  <script src="assets/app.js"></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    renderCategories('categoryGrid');
+    renderProducts('featuredProducts', 'all', 8);
+    const input = document.getElementById('homeSearch');
+    const results = document.getElementById('homeSearchResults');
+    const products = getProductsWithLiveStock();
+    input.addEventListener('input', () => {
+      const q = input.value.trim().toLowerCase();
+      if (!q) { results.style.display = 'none'; results.innerHTML = ''; return; }
+      const matches = products.filter(p => [p.name, p.category, p.gender, p.description].join(' ').toLowerCase().includes(q)).slice(0,5);
+      results.innerHTML = matches.length ? matches.map(p => `<a class="search-result-link" href="collections_page.html#${p.id}"><img src="${p.image}" alt="${p.name}"><div><strong>${p.name}</strong><span>${money(p.price)} · ${p.liveStock} left</span></div></a>`).join('') : '<div class="search-empty">No matching products found.</div>';
+      results.style.display = 'block';
+    });
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.search-shell')) { results.style.display = 'none'; }
+    });
+  });
+  </script>
+</body>
+</html>

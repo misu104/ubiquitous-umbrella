@@ -1,0 +1,18 @@
+Soroth hosting-ready package
+
+This version is prepared for GitHub Pages and Netlify.
+
+Important:
+- Use index.html as the homepage
+- Keep the assets and Image folders in the same root level
+
+GitHub Pages:
+1. Create a new repository
+2. Upload all files and folders from this ZIP to the repository root
+3. Go to Settings > Pages
+4. Source: Deploy from a branch
+5. Branch: main, Folder: /(root)
+
+Netlify Drop:
+1. Extract this ZIP
+2. Drag the extracted folder to https://app.netlify.com/drop

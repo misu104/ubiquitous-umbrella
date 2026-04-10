@@ -1,0 +1,137 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile — Soroth</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
+  
+</head>
+<body>
+  <header class="topbar">
+    <div class="container nav">
+      <a class="logo" href="index.html">Soroth</a>
+      <nav class="nav-links">
+        <a href="index.html" class="">Home</a>
+        <a href="collections_page.html" class="">Collections</a>
+        <a href="discount_corner.html" class="">Offers</a>
+        <a href="about_us_page.html" class="">About</a>
+        <a href="profile_page.html" class="active">Profile</a>
+        <a href="admin_panel.html" class="">Admin</a>
+      </nav>
+      <div class="nav-actions">
+        <a class="badge-pill" href="cart_page.html">Cart <strong data-cart-count>0</strong></a>
+      </div>
+    </div>
+  </header>
+  
+<section class="page-hero">
+  <div class="container">
+    <div class="panel">
+      <span class="chip">Customer Account</span>
+      <h1>Profile & Orders</h1>
+      <p class="muted">Manage your saved details and check the latest order status.</p>
+    </div>
+  </div>
+</section>
+<section class="section" style="padding-top:10px">
+  <div class="container profile-layout">
+    <div class="panel" style="padding:20px">
+      <h3>Saved Details</h3>
+      <form id="profileForm">
+        <div class="form-grid">
+          <input class="input" name="name" placeholder="Full name">
+          <input class="input" name="phone" placeholder="Phone number">
+        </div>
+        <div class="form-grid" style="margin-top:12px">
+          <input class="input" name="email" placeholder="Email address">
+          <input class="input" name="city" placeholder="City">
+        </div>
+        <textarea class="input" name="address" rows="4" placeholder="Address" style="margin-top:12px"></textarea>
+        <button class="btn btn-primary" style="margin-top:14px" type="submit">Save Profile</button>
+      </form>
+    </div>
+    <div class="panel" style="padding:20px">
+      <h3>Quick Links</h3>
+      <div class="grid">
+        <a class="btn btn-soft" href="collections_page.html">Continue Shopping</a>
+        <a class="btn btn-soft" href="cart_page.html">Open Cart</a>
+        <a class="btn btn-soft" href="admin_panel.html">Admin Panel</a>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="section" style="padding-top:0">
+  <div class="container">
+    <div class="panel" style="padding:20px">
+      <div class="section-head">
+        <div><h2 style="font-size:2rem">Order History</h2></div>
+      </div>
+      <div id="ordersWrap"></div>
+    </div>
+  </div>
+</section>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>
+        <div class="logo" style="color:white;background:none;-webkit-text-fill-color:white">Soroth</div>
+        <p class="small">Modern fashion for everyday confidence, occasion wear, and seasonal essentials.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <p><a href="collections_page.html">Collections</a></p>
+        <p><a href="discount_corner.html">Offers</a></p>
+        <p><a href="cart_page.html">Cart</a></p>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <p class="small">Email: hello@soroth.com</p>
+        <p class="small">Instagram: @soroth.style</p>
+        <p class="small">Dhaka, Bangladesh</p>
+      </div>
+    </div>
+  </footer>
+  <script src="assets/app.js"></script>
+  
+<script>
+function renderOrders(){
+  const wrap = document.getElementById('ordersWrap');
+  const orders = getOrders();
+  if (!orders.length){
+    wrap.innerHTML = '<div class="empty-state"><h3>No orders yet</h3><p class="muted">Once you place an order, it will appear here with its latest status.</p></div>';
+    return;
+  }
+  wrap.innerHTML = orders.map(order => `
+    <div class="order-card" style="margin-bottom:14px">
+      <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap">
+        <div>
+          <div class="muted small">${new Date(order.createdAt).toLocaleString()}</div>
+          <h3 style="margin:4px 0 0">${order.id}</h3>
+        </div>
+        <span class="status ${order.status}">${order.status.toUpperCase()}</span>
+      </div>
+      <div class="grid" style="gap:10px">
+        ${order.items.map(item => `<div class="kv"><span>${item.name} × ${item.quantity}</span><strong>${money(item.price * item.quantity)}</strong></div>`).join('')}
+      </div>
+      <div class="kv"><span>Total</span><strong>${money(order.subtotal)}</strong></div>
+    </div>`).join('');
+}
+document.addEventListener('DOMContentLoaded', () => {
+  const profile = getProfile();
+  Object.entries(profile).forEach(([k,v]) => { const field = document.querySelector(`#profileForm [name="${k}"]`); if (field) field.value = v; });
+  renderOrders();
+  document.getElementById('profileForm').addEventListener('submit', e => {
+    e.preventDefault();
+    saveProfile(Object.fromEntries(new FormData(e.target).entries()));
+    alert('Profile updated.');
+  });
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Collections — Soroth</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
+  
+</head>
+<body>
+  <header class="topbar">
+    <div class="container nav">
+      <a class="logo" href="index.html">Soroth</a>
+      <nav class="nav-links">
+        <a href="index.html" class="">Home</a>
+        <a href="collections_page.html" class="active">Collections</a>
+        <a href="discount_corner.html" class="">Offers</a>
+        <a href="about_us_page.html" class="">About</a>
+        <a href="profile_page.html" class="">Profile</a>
+        <a href="admin_panel.html" class="">Admin</a>
+      </nav>
+      <div class="nav-actions">
+        <a class="badge-pill" href="cart_page.html">Cart <strong data-cart-count>0</strong></a>
+      </div>
+    </div>
+  </header>
+  
+<section class="page-hero">
+  <div class="container">
+    <div class="panel">
+      <span class="chip">All Products</span>
+      <h1>Collections</h1>
+      <p class="muted">Explore the full Soroth catalog. Each product shows real remaining stock and can be added directly to the cart.</p>
+    </div>
+  </div>
+</section>
+<section class="section" style="padding-top:10px">
+  <div class="container">
+    <div class="filters">
+      <button class="active" data-filter="all">All</button>
+      <button data-filter="summer">Summer</button>
+      <button data-filter="winter">Winter</button>
+      <button data-filter="evening">Evening</button>
+      <button data-filter="discount">Offers</button>
+    </div>
+    <div class="grid products" id="allProducts"></div>
+  </div>
+</section>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>
+        <div class="logo" style="color:white;background:none;-webkit-text-fill-color:white">Soroth</div>
+        <p class="small">Modern fashion for everyday confidence, occasion wear, and seasonal essentials.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <p><a href="collections_page.html">Collections</a></p>
+        <p><a href="discount_corner.html">Offers</a></p>
+        <p><a href="cart_page.html">Cart</a></p>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <p class="small">Email: hello@soroth.com</p>
+        <p class="small">Instagram: @soroth.style</p>
+        <p class="small">Dhaka, Bangladesh</p>
+      </div>
+    </div>
+  </footer>
+  <script src="assets/app.js"></script>
+  
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  renderProducts('allProducts', 'all');
+  setupFilters('.filters button', 'allProducts');
+});
+</script>
+
+</body>
+</html>

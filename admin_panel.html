@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soroth — Order Management</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="container nav">
+      <a class="logo" href="index.html">Soroth</a>
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="collections_page.html">Collections</a>
+        <a href="cart_page.html">Cart</a>
+        <a href="profile_page.html">Profile</a>
+        <a href="admin_panel.html" class="active">Order Management</a>
+      </nav>
+      <div class="nav-actions">
+        <a class="badge-pill" href="cart_page.html">Cart <strong data-cart-count>0</strong></a>
+      </div>
+    </div>
+  </header>
+
+  <section class="page-hero">
+    <div class="container">
+      <div class="panel">
+        <div class="section-head" style="margin-bottom:10px;align-items:center">
+          <div>
+            <h1>Order Management</h1>
+            <p>Review incoming orders, confirm approved purchases, manage stock, and clear records whenever needed.</p>
+          </div>
+          <div class="order-actions">
+            <button class="btn btn-soft" onclick="if(confirm('Clear all stored orders?')){ localStorage.removeItem(STORAGE_KEYS.orders); renderAdmin(); }">Clear Orders</button>
+            <button class="btn btn-soft" onclick="if(confirm('Reset orders, cart, and stock?')){ resetStoreData(); renderAdmin(); }">Reset Store</button>
+          </div>
+        </div>
+        <div class="notice">Orders stay pending until you confirm them. Stock only decreases after confirmation.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container admin-layout">
+      <div class="panel" style="padding:24px">
+        <div class="section-head">
+          <div>
+            <h2>Recent orders</h2>
+            <p>Track pending, confirmed, or cancelled orders.</p>
+          </div>
+        </div>
+        <div class="admin-table" id="ordersList"></div>
+      </div>
+      <div class="panel" style="padding:24px">
+        <div class="section-head">
+          <div>
+            <h2>Live stock</h2>
+            <p>Available quantity across all Soroth products.</p>
+          </div>
+        </div>
+        <div class="admin-table" id="stockList"></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div><div class="logo" style="color:white;background:none;-webkit-text-fill-color:white">Soroth</div><p class="small">Modern fashion with strong product flow and order management.</p></div>
+      <div><h4>Explore</h4><p><a href="collections_page.html">Collections</a></p><p><a href="cart_page.html">Cart</a></p></div>
+      <div><h4>Contact</h4><p class="small">hello@soroth.com</p><p class="small">Dhaka, Bangladesh</p></div>
+    </div>
+  </footer>
+  <script src="assets/app.js"></script>
+  <script>
+  function renderAdmin(){
+    const orders = getOrders();
+    const products = getProductsWithLiveStock();
+    const ordersList = document.getElementById('ordersList');
+    if (!orders.length){
+      ordersList.innerHTML = '<div class="empty-state admin-box"><h3>No orders yet</h3><p class="muted">New customer orders will appear here once placed.</p></div>';
+    } else {
+      ordersList.innerHTML = orders.map(order => `
+        <div class="order-card">
+          <div class="price-row">
+            <div>
+              <div class="muted small">${new Date(order.createdAt).toLocaleString()}</div>
+              <h3 style="margin:4px 0">${order.id}</h3>
+              <div class="muted small">${order.customer.name} · ${order.customer.phone} · ${order.customer.city || ''}</div>
+            </div>
+            <span class="status ${order.status}">${order.status.toUpperCase()}</span>
+          </div>
+          <div class="grid" style="gap:8px">
+            ${order.items.map(item => `<div class="kv"><span>${item.name} × ${item.quantity}</span><strong>${money(item.price * item.quantity)}</strong></div>`).join('')}
+          </div>
+          <div class="order-actions">
+            <button class="btn btn-primary" ${order.status==='confirmed' ? 'disabled' : ''} onclick="updateOrderStatus('${order.id}','confirmed'); renderAdmin();">Confirm Order</button>
+            <button class="btn btn-soft" ${order.status==='cancelled' ? 'disabled' : ''} onclick="updateOrderStatus('${order.id}','cancelled'); renderAdmin();">Cancel</button>
+            <button class="btn btn-soft" onclick="if(confirm('Delete this order record?')){ deleteOrder('${order.id}'); renderAdmin(); }">Delete</button>
+          </div>
+        </div>`).join('');
+    }
+    document.getElementById('stockList').innerHTML = products.map(p => `
+      <div class="admin-box">
+        <div style="display:grid;grid-template-columns:72px 1fr;gap:12px;align-items:center">
+          <img src="${p.image}" alt="${p.name}" style="width:72px;height:72px;border-radius:14px;object-fit:cover">
+          <div>
+            <strong>${p.name}</strong>
+            <div class="muted small">${p.id} · ${money(p.price)}</div>
+          </div>
+        </div>
+        <div class="kv"><span>Available</span><strong>${p.liveStock}</strong></div>
+      </div>`).join('');
+  }
+  document.addEventListener('DOMContentLoaded', renderAdmin);
+  </script>
+</body>
+</html>
